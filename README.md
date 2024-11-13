@@ -44,9 +44,45 @@ Main things I want in the game:
 
 Defines what a "character" is. Can either be defining an enemy or Rowan the Swift.
 
+Attributes:
+- Name
+- hitPoints 
+  - Indicates the health status of the character
+  - In terms of coding, it defines how much more damage the character can take
+  - HP can go negative
+- maxDamage
+  - Indicates the maximum damage a character can deal to their opponent
+  - maxDamage is greater than 0
+  - maxDamage will not be the damage the character does everytime 
+- hitChance
+  - Indicates how likely the character is to hit the opponent
+  - Is a percent
+  - Integer between 1-100
+- healingFactor
+  - Indicates how likely the character is to heal between "hits"
+  - Is a percent
+  - Integer between 1-100
+- maxHealing
+  - Maximum amount a character can heal between hits
+  - Greater than 0
+  - maxHealing will not be the amount the character heals everytime 
+
 #### Initializing
 
+Sets image for characters. Sets position and how the character moves within the game scheme. 
+
+Calls the attributes and assigns them to be public. Defines dx and dy, should move 3 pixels per frame. 
+
 #### Process Method
+
+If left arrow key pressed, character moves in negative x direction. If right arrow key pressed, character moves in positive x direction. 
+
+If up arrow key pressed, character moves in negative y direction. If down arrow key pressed, character moves in positive y direction.
+
+If space bar is pressed, check if character collideswith an enemy. If so, call fight method. 
+
+If "a" pressed, check if character collideswith an object. If so, call pickUp method. 
+
 
 #### Fight Method
 
