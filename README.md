@@ -40,7 +40,7 @@ Main things I want in the game:
 - Win screen
 - Varying difficulties with the enemies
 
-### Character Class 
+### Character Module
 
 Will be in module separate from gameplay. Defines what a "character" is. Can either be defining an enemy or Rowan the Swift.
 
@@ -76,16 +76,7 @@ Sets image for characters. Sets position and how the character moves within the 
 
 Calls the attributes and assigns them to be public. Defines dx and dy, should move 3 pixels per frame. 
 
-#### Process Method
-
-If left arrow key pressed, character moves in negative x direction. If right arrow key pressed, character moves in positive x direction. 
-
-If up arrow key pressed, character moves in negative y direction. If down arrow key pressed, character moves in positive y direction.
-
-If space bar is pressed, check if character collideswith an enemy. If so, call fight method. 
-
-If "a" pressed, check if character collideswith an object. If so, call pickUp method. 
-
+Initialize inventory. Inventory gets empty list. 
 
 #### Hit Method
 
@@ -97,10 +88,31 @@ Subtract hitDamage from enemy hitPoints. Return enemy hitPoints.
 
 #### Fight Method
 
+For loop. Each time <SPACE> pressed, character1 hits character2 and character 2 hits character1. Get hitPoints. If hitPoints less than or equal to 0, character dies. Else, check for key press. 
+
+
+### Rowan Class
+
+Initializes name and health stats of Rowan. Uses Character Module.
+
+#### Process Method 
+
+If left arrow key pressed, character moves in negative x direction. If right arrow key pressed, character moves in positive x direction. 
+
+If up arrow key pressed, character moves in negative y direction. If down arrow key pressed, character moves in positive y direction.
+
+If space bar is pressed, check if character collideswith an enemy. If so, call fight method. 
+
+If "a" pressed, check if character collideswith an object. If so, call pickUp method. 
 
 #### Pick Up Method
 
-### Objects Class
+
+### Enemy Class
+
+### Potions Class
+
+### Coin Class
 ### Scene Class
 ### Labels
 ### Game Class
