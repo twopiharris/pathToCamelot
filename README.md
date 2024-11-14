@@ -1,6 +1,6 @@
 # The Path to Camelot
 
-Well met, Traveler! You are Rowan the Swift. Your mission, should you choose to accept it, is to find the magical healing elixir in the city of Camelot. It's imperative that you are quick about it because the King's daughter's life is at stake. Along the way, you will have the opportunity to pick up coins and healing potions to boost your health stats. Various scoundrels and thieves from Avalon will try to thwart you, but you mustn't let them. 
+Well met, Traveler! You are Rowan the Swift. Your mission, should you choose to accept it, is to find the magical healing elixir in the city of Camelot. It's imperative that you are quick about it because the princess's life is at stake. Along the way, you will have the opportunity to pick up coins and healing potions to boost your health stats. Various scoundrels and thieves from Avalon will try to thwart you, but you mustn't let them. 
 
 To win, you must get the elixir to the King within a 10 minute time frame with at least 10 HP. Do try not to die, young knight.
 
@@ -40,9 +40,9 @@ Main things I want in the game:
 - Win screen
 - Varying difficulties with the enemies
 
-### Character Class
+### Character Class 
 
-Defines what a "character" is. Can either be defining an enemy or Rowan the Swift.
+Will be in module separate from gameplay. Defines what a "character" is. Can either be defining an enemy or Rowan the Swift.
 
 Attributes:
 - Name
@@ -65,7 +65,10 @@ Attributes:
 - maxHealing
   - Maximum amount a character can heal between hits
   - Greater than 0
-  - maxHealing will not be the amount the character heals everytime 
+  - maxHealing will not be the amount the character heals everytime
+- armor
+  - Does the character have any protection
+  - Integer between 0 and 10
 
 #### Initializing
 
@@ -84,7 +87,16 @@ If space bar is pressed, check if character collideswith an enemy. If so, call f
 If "a" pressed, check if character collideswith an object. If so, call pickUp method. 
 
 
+#### Hit Method
+
+Takes self and enemy. Generate a random number between 1-100. If number is less than or equal to hitChance, hit lands. After hit, generate damage using random integer between 1 and maxDamage. Subtract enemy armor from hit damage.
+
+Generate random number between 1-100. If number is less than or equal to healingFactor, character heals. Generate healing using random integer between 1 and maxHealing. Subtract from hit damage. 
+
+Subtract hitDamage from enemy hitPoints. Return enemy hitPoints. 
+
 #### Fight Method
+
 
 #### Pick Up Method
 
