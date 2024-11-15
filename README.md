@@ -3,10 +3,38 @@
 Well met, Traveler! You are Rowan the Swift. Your mission, should you choose to accept it, is to find the magical healing elixir in the city of Camelot. It's imperative that you are quick about it because the princess's life is at stake. Along the way, you will have the opportunity to pick up healing potions to boost your health stats. Various scoundrels and thieves from Avalon will try to thwart you, but you mustn't let them. 
 
 To win, you must get the elixir to the King within a 10 minute time frame with at least 10 HP. Do try not to die, young knight.
-## Assets
+## Game Design Images
+
+### Intro Screen
+
+Very rough sketch of what the instructions screen will look like. Instructions have changed with further planning.
+
+![Instructions Screen](https://github.com/meadams2/pathToCamelot/blob/main/PathtoCamelotInstructions.jpg)
+
+### Gameplay
+
+Very rough sketch of what the gameplay will look like. Tilebased world. 
+
+![Gameplay Screen](https://github.com/meadams2/pathToCamelot/blob/main/PathtoCamelotGameplay.jpg)
+
+## Assets 
 
 - Instructions Screen Scroll Background from https://openclipart.org/detail/271009/scroll-2 by Arvin61r58
-- 
+  
+### Tile Textures
+
+-	Grass Texture created by Lamoot under CC-BY 3.0. Link to site: https://opengameart.org/content/grass-texture
+-	Path texture created by Dimred under CC-BY 4.0. Link to site: https://opengameart.org/content/seamless-stone-ground-texture.
+-	Water texture created by Proxy Games under CC0. Link to site: https://opengameart.org/content/water-texture-pack.
+-	Forest texture created by GrEmlin under CC0. Link to site: https://opengameart.org/content/seamless-grass-texture-1.
+
+### Sprites 
+
+- Rowan—Character sheet created using https://sanderfrenken.github.io/Universal-LPC-Spritesheet-Character-Generator/#?body=Body_color_light&head=Human_male_light.
+- Bosses and Monsters Spritesheets—Created by Stephen Challener (Redshrike) under CC-BY3.0. Link: https://opengameart.org/content/bosses-and-monsters-spritesheets-ars-notoria.
+- Potions—Created by Hyptosis and Zabin under CC-BY 3.0. Link to site: https://opengameart.org/content/lots-of-free-2d-tiles-and-sprites-by-hyptosis.
+- 98 Pixel Art RPG Icons—Created by 7Soul under CC-BY 3.0. Link to site: https://opengameart.org/content/98-pixel-art-rpg-icons.
+  - Used for Elixir
 
 ## Milestones
 
