@@ -3,6 +3,10 @@
 Well met, Traveler! You are Rowan the Swift. Your mission, should you choose to accept it, is to find the magical healing elixir in the city of Camelot. It's imperative that you are quick about it because the princess's life is at stake. Along the way, you will have the opportunity to pick up healing potions to boost your health stats. Various scoundrels and thieves from Avalon will try to thwart you, but you mustn't let them. 
 
 To win, you must get the elixir to the King within a 10 minute time frame with at least 10 HP. Do try not to die, young knight.
+## Assets
+
+- Instructions Screen Scroll Background from https://openclipart.org/detail/271009/scroll-2 by Arvin61r58
+- 
 
 ## Milestones
 
@@ -93,6 +97,7 @@ Initialize inventory. Inventory gets empty list.
 
 #### Process Method 
 
+##### Standard Motion
 If left arrow key pressed, character moves in negative x direction. If right arrow key pressed, character moves in positive x direction. 
 
 If up arrow key pressed, character moves in negative y direction. If down arrow key pressed, character moves in positive y direction.
@@ -102,6 +107,10 @@ If space bar is pressed, check if character collideswith an enemy. If so, call f
 If "a" pressed, check if character collideswith an object. If so, call pickUp method. 
 
 If "d" pressed, check if healing potion in inventory. If so, call heal method. 
+
+##### Adjust Movement Speed by Terrain 
+
+If tileState is 0, movespeed gets 2. If tileState is 1, movespeed gets 5. If tileState is 2, movespeed gets 0.5. If tileState is 3, movespeed is 0.2. 
 
 #### Fight Method
 
@@ -143,6 +152,11 @@ Default state is Grass.
 Copy the image corresponding with the state. 
 
 ### Labels
+
+Define new class called LblHP that takes simpleGE.Label. LblHP will be label with hitPoints. Label text should say "HP: 0" as the default. Center at (100, 30). Set label color to "white". Set label font to "Vinter Hand ITC". 
+
+Define new class called LblTime. LblTime takes simpleGE.Label. LblTime will be label with time. Time gets lblTime / 60 to get time in minutes. Label text should say "Time Left: 10 minutes". Set label color to "white". Set label font to "Vinter Hand ITC". 
+
 ### Game Class
 
 Defines what the game behavior is. 
@@ -157,6 +171,8 @@ Define how many rows of the map will be on screen at once using constant. There 
 
 Add tileset to list of sprites. 
 
+Initialize timing. 
+
 Call Rowan class. Assume default behavior. Add to list of sprites. 
 
 Create empty list under "enemies". For loop, range 8. Call Enemy class. Assume default behavior. Add to list of enemies. Add to list of sprites. 
@@ -164,6 +180,8 @@ Create empty list under "enemies". For loop, range 8. Call Enemy class. Assume d
 Create empty list under "potions". For loop, range 10. Call Potions class. Default behavior. Add to list of potions. Add potions to list of sprites. 
 
 Call Elixir class. Assume default behavior. Add to list of sprites. 
+
+Call labels. Add to list of sprites. 
 
 #### Load Map Method
 
@@ -183,6 +201,83 @@ Check if up key is pressed. Then check if self.offRow is greater than 0. If so, 
 
 Check if down key is pressed. Then check if self.offRow is less than the difference between total number of rows and the screen rows. If so, add 1 to offRow. 
 
+Update lblTime text. Each frame, check if Elixir in inventory, if so, win. If time left is less than 0, check if Elixir in Rowan.inventory. If so, win screen. Else, lose. 
+
 Call showMap(). 
+
 ### Instructions
 
+Define new class called Instructions that takes simpleGE.Scene. 
+
+#### Label
+Define initializing method. Init method takes self. Set background image to instructionsScroll.png. 
+
+Set MultiLabel background color to white. Set font to "Viner Hand ITC". Instructions text will read: 
+
+> Well met, Traveler! You are Rowan the Swift. Your mission, should you choose to accept it, is to find the magical healing elixir in the city of Camelot. It's imperative that you are quick about it because the princess's life is at stake. Along the way, you will have the opportunity to pick up healing potions to boost your health stats. Various scoundrels and thieves from Avalon will try to thwart you, but you mustn't let them.
+> 
+>To win, you must get the elixir to the King within a 10 minute time frame with at least 10 HP. Do try not to die, young knight.
+> 
+> Use the arrow keys to move, press <SPACE> to attack, press "a" to pick up an object. Press "d" to use an object.
+
+Center instructions at (320, 240). Scale instructions to (500, 250). 
+
+Add self.instructions to list of sprites. 
+
+#### Buttons
+
+Buttons should do the respective action when clicked or the corresponding key is pressed. 
+
+Initialize simpleGE.Button() and store in self.btnPlay. Play button should read "Play (up)". Center at (100, 400). Change label color to white. Set font to "Viner Hand ITC". Add self.btnPlay to list of sprites. 
+
+Initialize simpleGE.Button() and store in self.btnQuit. Quit button should read "Quit (down)". Center at (550, 400). Change label color to white. Set font to "Viner Hand ITC". Add self.btnQuit to list of sprites. 
+
+#### Process Method
+
+If play button is clicked, response gets "Play" and instructions scene stops. If up arrow key is pressed, response gets "Play" and instruction scene stops. 
+
+If quit button is clicked, response gets "Quit" and instruction scene stops. If down arrow key is pressed, response gets "Quit" and instruction scene stops. 
+
+### Win
+
+Define initializing method. Win will use simpleGE.Scene. Set background image to "instructionsScroll.png". Use multilabel and store in self.win. Textbox should read:
+> Congratulations, young knight! Thank you for saving my daughter.
+
+Set label color to white. Set font to "Vinter Hand ITC". Center at (320, 240). Set size to (500, 250). 
+
+Create "Play Again" button with simpleGE.button(). Button should read "Play Again (up)". Label color should be white. Set font to "Vinter Hand ITC". Center at (100, 400). Create "Quit" button with simpleGE.button(). Button should read "Quit (down)". Center at (550, 400). 
+
+Add to list of sprites. 
+
+#### Process Method
+
+If play again button clicked, response gets play again. Check for up key press. Response gets play again. 
+
+If quit button clicked, response gets Quit. Check for down key press. Response gets quit. 
+
+### Lose 
+
+Define initializing method. Lose will use simpleGE.Scene. Set background image to "InstructionsScroll.png". Use multilabel and store in self.lose. Textbox should read:
+> You didn't get the Elixir in time. As a result, the princess has died and war has started with Avalon.
+
+Set label color to white. Set font to "Vinter Hand ITC". Center at (320, 240). Set size to (500, 250). 
+
+Create "Play Again" button with simpleGE.button(). Button should read "Play Again (up)". Label color should be white. Set font to "Vinter Hand ITC". Center at (100, 400). Create "Quit" button with simpleGE.button(). Button should read "Quit (down)". Center at (550, 400). 
+
+Add to list of sprites. 
+
+#### Process Method
+
+If play again button clicked, response gets play again. Check for up key press. Response gets play again. 
+
+If quit button clicked, response gets Quit. Check for down key press. Response gets quit. 
+
+### Main Function
+
+Call instructions. If instructions.response is "Play", start the game. If instructions.response is "Quit", stop the instructions. 
+
+Initialize while loop with keepGoing = True sentry. 
+
+If game.level is "Win", win.start(). If win.response is "Quit", keepGoing gets false. If response is "Play Again", start game. 
+
+If game.level is "lose", lose.start(). If lose.response is "Quit", keepGoing gets false. If response is "Play again", start game. 
