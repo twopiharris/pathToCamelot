@@ -9,13 +9,13 @@ To win, you must get the elixir to the King within a 10 minute time frame with a
 
 Very rough sketch of what the instructions screen will look like. Instructions have changed with further planning.
 
-![Instructions Screen](https://github.com/meadams2/pathToCamelot/blob/main/PathtoCamelotInstructions.jpg)
+![Instructions Screen](https://github.com/meadams2/pathToCamelot/blob/main/Game%20Dev/PathtoCamelotInstructions.jpg)
 
 ### Gameplay
 
 Very rough sketch of what the gameplay will look like. Tilebased world. 
 
-![Gameplay Screen](https://github.com/meadams2/pathToCamelot/blob/main/PathtoCamelotGameplay.jpg)
+![Gameplay Screen](https://github.com/meadams2/pathToCamelot/blob/main/Game%20Dev/PathtoCamelotGameplay.jpg)
 
 ## Assets 
 
