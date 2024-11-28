@@ -1,7 +1,7 @@
 """Marianne Adams
 CS120
 Path to Camelot"""
-import pygame, simpleGE, camelotCharacter
+import pygame, simpleGE, random, camelotCharacter
     
 class Tile(simpleGE.Sprite):
     def __init__(self, scene):
@@ -23,15 +23,15 @@ class Tile(simpleGE.Sprite):
         self.state = state
         self.copyImage(self.images[state])
     
-class Rowan(simpleGE.Scene, camelotCharacter.Character):
+class Rowan(simpleGE.Sprite, camelotCharacter.Character):
     def __init__(self, scene):
         super().__init__(scene)
-        self.rowan = self.Character("Rowan", 20, 25, 3, 10, 2, 5)
-        self.image = pygame.image.load("Rowan.png")
+        self.rowan = camelotCharacter.Character("Rowan", 20, 25, 3, 10, 2, 5)
+        self.image = self.setImage("RowanMain.png")
         self.x = 1
         self.y = 2
         self.dx = 2
-        self.dy =2
+        self.dy = 2
         self.inventory = []
         
     def process(self):
@@ -43,16 +43,43 @@ class Rowan(simpleGE.Scene, camelotCharacter.Character):
             self.y -= self.dy
         if self.isKeyPressed(pygame.K_DOWN):
             self.y += self.dy
-        if self.isKeyPressed(pygame.K_a):
-            if self.collideswith(potion):
-               self.pickUp()
-        if self.isKeyPressed(pygame.K_SPACE):
-            if self.collideswith(enemy):
-                self.fight()
-        if self.isKeyPressed(pygame.K_d):
-            if potion in inventory:
-                self.heal()
-    def fight(self):
+#         if self.isKeyPressed(pygame.K_a):
+#             if self.collideswith(potion):
+#                self.pickUp()
+#         if self.isKeyPressed(pygame.K_SPACE):
+#             if self.collideswith(enemy):
+#                 self.fight()
+#         if self.isKeyPressed(pygame.K_d):
+#             if potion in inventory:
+#                 self.heal()
+                
+class Enemy(simpleGE.Sprite, camelotCharacter.Character):
+    def __init__(self, scene):
+        super().__init__(scene)
+        enemy = camelotCharacter.Character()
+        self.hitPoints = random.randint(0, 25)
+        self.hitChance = random.randint(0, 100)
+        self.maxDamage = random.randint(0, 15)
+        self.healingFactor = random.randint(0, 100)
+        self.maxHealing = random.randint(0, 15)
+        self.armor = random.randint(0, 10)
+        self.images = [pygame.image.load("Enemy1.png"),
+                       pygame.image.load("Enemy2.png"),
+                       pygame.image.load("Enemy3.png"),
+                       pygame.image.load("Enemy4.png"),
+                       pygame.image.load("Enemy5.png")]
+        self.imagePos = random.randint(0, 4)
+        self.setImage(self.images[self.imagePos])
+        self.x = random.randint(0, 640)
+        self.y = random.randint(0, 480)
+
+class Potion(simpleGE.Sprite):
+    def __init__(self, scene):
+        super().__init__(scene)
+        self.setImage("healingPotion.png")
+        self.x = random.randint(0,640)
+        self.y = random.randint(0, 480)
+        self.healthAdd = random.randint(0, 5)
         
 class Game(simpleGE.Scene):
     def __init__(self):
@@ -71,7 +98,20 @@ class Game(simpleGE.Scene):
         
         self.loadMap()
         
-        self.sprites = [self.tileset]
+        self.rowan = Rowan(self)
+        
+        self.enemies = []
+        for i in range(5):
+            self.enemies.append(Enemy(self))
+            
+        self.potions = []
+        for i in range (4):
+            self.potions.append(Potion(self))
+            
+        self.sprites = [self.tileset,
+                        self.rowan,
+                        self.enemies,
+                        self.potions]
         
     def loadMap(self):
         self.map = [
@@ -107,32 +147,61 @@ class Game(simpleGE.Scene):
                 newTile.x = xPos
                 newTile.y = yPos
                 self.tileset[row].append(newTile)
+    def showMap(self):
+        for row in range (self.SCREEN_ROWS):
+            for col in range(self.SCREEN_COLS):
+                currentVal = self.map[row + self.offRow][col + self.offCol]
+                self.tileset[row][col].setState(currentVal)
     
-#     def showMap(self):
-#         for row in range(self.SCREEN_ROWS):
-#             for col in range(self.SCREEN_COLS):
-#                 currentVal = self.map[row + self.offRow][col + self.offCol]
-#                 self.tileset[row][col].setState(currentVal)
-                
-#     def process(self):
-#         if self.isKeyPressed(pygame.K_LEFT):
-#             if self.offCol > 0:
-#                 self.offCol -= 1
-#                 
-#         if self.isKeyPressed(pygame.K_RIGHT):
-#             if self.offCol < (self.COLS - self.SCREEN_COLS):
-#                 self.offCol += 1
-#         
-#         if self.isKeyPressed(pygame.K_UP):
-#             if self.offRow > 0:
-#                 self.offRow -= 1
-#         
-#         if self.isKeyPressed(pygame.K_DOWN):
-#             if self.offRow < (self.ROWS - self.SCREEN_ROWS):
-#                 self.offRow += 1
-#         
-#         self.showMap()
+    def process(self):
+        if self.isKeyPressed(pygame.K_LEFT):
+            if self.offCol > 0:
+                self.offCol -= 1
         
+        if self.isKeyPressed(pygame.K_RIGHT):
+            if self.offCol < (self.COLS - self.SCREEN_COLS):
+                self.offCol += 1
+        
+        if self.isKeyPressed(pygame.K_UP):
+            if self.offRow > 0:
+                self.offRow -= 1
+        
+        if self.isKeyPressed(pygame.K_DOWN):
+            if self.offRow < (self.ROWS - self.SCREEN_ROWS):
+                self.offRow += 1
+        
+        self.showMap()
+        
+#     def fight(self):
+#         rowan.hit(enemy)
+#         enemy.hit(rowan)
+#         keepGoing = True
+#         while keepGoing:
+#             if enemy.hitPoints <= 0:
+#                 enemies.remove()
+#                 keepGoing = False
+#             elif rowan.hitPoints <= 0:
+#                 rowan.hitPoints = 0
+#                 game.stop()
+#                 keepGoing = False
+#             else:
+#                 enemy.hit(rowan)
+#                 rowan.hit(enemy)
+                
+    def characterProcess(self):
+        if self.isKeyPressed(pygame.K_SPACE):
+            for i in self.enemies:
+                if rowan.collideswith(enemy):
+                    self.fight()
+        
+        if self.isKeyPressed(pygame.K_a):
+            for i in self.potions:
+                if rowan.collideswith(potions):
+                    self.pickUp()
+                    
+        if self.isKeyPressed(pygame.K_d):
+            if Potion() in self.potions:
+                self.heal()
 def main():
     game = Game()
     game.start()
