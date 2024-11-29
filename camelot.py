@@ -23,13 +23,20 @@ class Tile(simpleGE.Sprite):
         self.state = state
         self.copyImage(self.images[state])
     
-class Rowan(simpleGE.Sprite, camelotCharacter.Character):
+class Rowan(simpleGE.Sprite):
     def __init__(self, scene):
         super().__init__(scene)
         self.rowan = camelotCharacter.Character("Rowan", 20, 25, 3, 10, 2, 5)
-        self.image = self.setImage("RowanMain.png")
-        self.x = 1
-        self.y = 2
+        # this will really confuse things
+        #self.image = self.setImage("RowanMain.png")
+        self.setImage("RowanMain.png")
+        
+        # this isn't doing anything
+        #self.x = 1
+        #self.y = 2
+        
+        self.position = (320, 240)
+        
         self.moveSpeed = 2
         self.inventory = []
         
@@ -42,6 +49,7 @@ class Rowan(simpleGE.Sprite, camelotCharacter.Character):
             self.y -= self.moveSpeed
         if self.isKeyPressed(pygame.K_DOWN):
             self.y += self.moveSpeed
+            
 #         if self.isKeyPressed(pygame.K_a):
 #             if self.collideswith(potion):
 #                self.pickUp()
@@ -146,6 +154,9 @@ class Game(simpleGE.Scene):
                 self.tileset[row].append(newTile)
                 
     def showMap(self):
+        #disabling scrolling for now
+        self.offRow = 0
+        self.offCol = 0
         for row in range (self.SCREEN_ROWS):
             for col in range(self.SCREEN_COLS):
                 currentVal = self.map[row + self.offRow][col + self.offCol]

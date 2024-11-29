@@ -121,7 +121,9 @@ Armor: {self.armor}""")
             hitDamage -= enemy.armor
             if random.randrange(1, 100) <= self.healingFactor:
                 healingPower = random.randrange(1, self.maxHealing)
-                hitDamage -= enemy.healingPower
+                # problem in next line.  healingPower is a local variable,
+                # you are treating it like a property. Taking it out for now
+                # hitDamage -= enemy.healingPower
                 if hitDamage < 0:
                     hitDamage = 0
                 enemy.hitPoints -= hitDamage
