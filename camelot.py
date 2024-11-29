@@ -30,19 +30,18 @@ class Rowan(simpleGE.Sprite, camelotCharacter.Character):
         self.image = self.setImage("RowanMain.png")
         self.x = 1
         self.y = 2
-        self.dx = 2
-        self.dy = 2
+        self.moveSpeed = 2
         self.inventory = []
         
     def process(self):
         if self.isKeyPressed(pygame.K_LEFT):
-            self.x -= self.dx
+            self.x -= self.moveSpeed
         if self.isKeyPressed(pygame.K_RIGHT):
-            self.x += self.dx
+            self.x += self.moveSpeed
         if self.isKeyPressed(pygame.K_UP):
-            self.y -= self.dy
+            self.y -= self.moveSpeed
         if self.isKeyPressed(pygame.K_DOWN):
-            self.y += self.dy
+            self.y += self.moveSpeed
 #         if self.isKeyPressed(pygame.K_a):
 #             if self.collideswith(potion):
 #                self.pickUp()
@@ -53,33 +52,33 @@ class Rowan(simpleGE.Sprite, camelotCharacter.Character):
 #             if potion in inventory:
 #                 self.heal()
                 
-class Enemy(simpleGE.Sprite, camelotCharacter.Character):
-    def __init__(self, scene):
-        super().__init__(scene)
-        enemy = camelotCharacter.Character()
-        self.hitPoints = random.randint(0, 25)
-        self.hitChance = random.randint(0, 100)
-        self.maxDamage = random.randint(0, 15)
-        self.healingFactor = random.randint(0, 100)
-        self.maxHealing = random.randint(0, 15)
-        self.armor = random.randint(0, 10)
-        self.images = [pygame.image.load("Enemy1.png"),
-                       pygame.image.load("Enemy2.png"),
-                       pygame.image.load("Enemy3.png"),
-                       pygame.image.load("Enemy4.png"),
-                       pygame.image.load("Enemy5.png")]
-        self.imagePos = random.randint(0, 4)
-        self.setImage(self.images[self.imagePos])
-        self.x = random.randint(0, 640)
-        self.y = random.randint(0, 480)
+# class Enemy(simpleGE.Sprite, camelotCharacter.Character):
+#     def __init__(self, scene):
+#         super().__init__(scene)
+#         enemy = camelotCharacter.Character()
+#         self.hitPoints = random.randint(0, 25)
+#         self.hitChance = random.randint(0, 100)
+#         self.maxDamage = random.randint(0, 15)
+#         self.healingFactor = random.randint(0, 100)
+#         self.maxHealing = random.randint(0, 15)
+#         self.armor = random.randint(0, 10)
+#         self.images = [pygame.image.load("Enemy1.png"),
+#                        pygame.image.load("Enemy2.png"),
+#                        pygame.image.load("Enemy3.png"),
+#                        pygame.image.load("Enemy4.png"),
+#                        pygame.image.load("Enemy5.png")]
+#         self.imagePos = random.randint(0, 4)
+#         self.copyImage(self.images[self.imagePos])
+#         self.x = random.randint(0, 640)
+#         self.y = random.randint(0, 480)
 
-class Potion(simpleGE.Sprite):
-    def __init__(self, scene):
-        super().__init__(scene)
-        self.setImage("healingPotion.png")
-        self.x = random.randint(0,640)
-        self.y = random.randint(0, 480)
-        self.healthAdd = random.randint(0, 5)
+# class Potion(simpleGE.Sprite):
+#     def __init__(self, scene):
+#         super().__init__(scene)
+#         self.setImage("healingPotion.png")
+#         self.x = random.randint(0,640)
+#         self.y = random.randint(0, 480)
+#         self.healthAdd = random.randint(0, 5)
         
 class Game(simpleGE.Scene):
     def __init__(self):
@@ -100,18 +99,16 @@ class Game(simpleGE.Scene):
         
         self.rowan = Rowan(self)
         
-        self.enemies = []
-        for i in range(5):
-            self.enemies.append(Enemy(self))
-            
-        self.potions = []
-        for i in range (4):
-            self.potions.append(Potion(self))
+#         self.enemies = []
+#         for i in range(5):
+#             self.enemies.append(Enemy(self))
+#             
+#         self.potions = []
+#         for i in range (4):
+#             self.potions.append(Potion(self))
             
         self.sprites = [self.tileset,
-                        self.rowan,
-                        self.enemies,
-                        self.potions]
+                        self.rowan]
         
     def loadMap(self):
         self.map = [
@@ -147,6 +144,7 @@ class Game(simpleGE.Scene):
                 newTile.x = xPos
                 newTile.y = yPos
                 self.tileset[row].append(newTile)
+                
     def showMap(self):
         for row in range (self.SCREEN_ROWS):
             for col in range(self.SCREEN_COLS):
@@ -188,20 +186,20 @@ class Game(simpleGE.Scene):
 #                 enemy.hit(rowan)
 #                 rowan.hit(enemy)
                 
-    def characterProcess(self):
-        if self.isKeyPressed(pygame.K_SPACE):
-            for i in self.enemies:
-                if rowan.collideswith(enemy):
-                    self.fight()
-        
-        if self.isKeyPressed(pygame.K_a):
-            for i in self.potions:
-                if rowan.collideswith(potions):
-                    self.pickUp()
-                    
-        if self.isKeyPressed(pygame.K_d):
-            if Potion() in self.potions:
-                self.heal()
+#     def characterProcess(self):
+#         if self.isKeyPressed(pygame.K_SPACE):
+#             for i in self.enemies:
+#                 if rowan.collideswith(enemy):
+#                     self.fight()
+#         
+#         if self.isKeyPressed(pygame.K_a):
+#             for i in self.potions:
+#                 if rowan.collideswith(potions):
+#                     self.pickUp()
+#                     
+#         if self.isKeyPressed(pygame.K_d):
+#             if Potion() in self.potions:
+#                 self.heal()
 def main():
     game = Game()
     game.start()
